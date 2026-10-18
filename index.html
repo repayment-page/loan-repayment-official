@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Repayment Page — Demo</title>
+  <style>
+    :root { --yellow: #ffdc00; --bg: #090b0d; --muted: #aeb3bb; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 18px; background: var(--bg); color: #fff;
+      font-family: Arial, Helvetica, sans-serif; max-width: 560px; margin-inline: auto;
+    }
+    header { text-align: center; padding: 12px 0 20px; }
+    header .mark { color: var(--yellow); font-size: 34px; font-weight: 900; }
+    header h1 { margin: 2px 0; font-size: 29px; }
+    header h1 span { color: var(--yellow); }
+    header p { color: var(--muted); letter-spacing: 2px; font-size: 11px; }
+    .timer {
+      border: 1px solid #777; border-radius: 18px; padding: 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .timer strong { display: block; font-size: 16px; }
+    .timer small { color: #c5c8cc; display: block; margin-top: 5px; }
+    .clock { background: var(--yellow); color: #111; padding: 12px; border-radius: 10px; font-weight: 800; white-space: nowrap; }
+    .card { background: #fffdf0; color: #101114; padding: 18px; margin: 14px 0; border-radius: 17px; }
+    .line { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .label { color: #555; font-size: 14px; margin-bottom: 7px; }
+    .value { font-size: clamp(21px, 6vw, 30px); font-weight: 800; overflow-wrap: anywhere; }
+    .copy { border: 0; border-radius: 12px; padding: 13px 15px; background: var(--yellow); color: #111; font-weight: 800; cursor: pointer; }
+    .section { border: 1px solid #45484d; border-radius: 17px; padding: 17px; margin: 14px 0; }
+    .section h2 { font-size: 19px; margin: 0 0 6px; }
+    .muted { color: var(--muted); font-size: 14px; margin-top: 0; }
+    .apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+    .app { border: 1px solid #44474c; border-radius: 13px; padding: 16px 8px; text-align: center; }
+    .app .logo { color: var(--yellow); font-size: 22px; font-weight: 900; margin-bottom: 9px; }
+    .app button { margin-top: 10px; border: 1px solid var(--yellow); color: var(--yellow); background: transparent; border-radius: 20px; padding: 8px 16px; font-weight: 700; }
+    label { display: block; font-weight: 800; margin-bottom: 8px; }
+    input { width: 100%; border: 1px solid #444; border-radius: 10px; padding: 14px; font-size: 16px; margin: 6px 0 12px; }
+    .submit { width: 100%; border: 0; border-radius: 28px; padding: 15px; background: var(--yellow); font-size: 17px; font-weight: 800; cursor: pointer; }
+    .notice { border: 1px solid #45484d; border-radius: 17px; padding: 18px; }
+    .notice h2 { color: var(--yellow); margin-top: 0; }
+    .notice li { margin: 9px 0; line-height: 1.4; }
+    .demo { font-size: 12px; color: #aeb3bb; text-align: center; margin: 18px 0 6px; }
+    @media (min-width: 420px) { .apps { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="mark">➤</div>
+    <h1>Repay<span>ment</span></h1>
+    <p>FAST · SECURE · RELIABLE</p>
+  </header>
+
+  <div class="timer">
+    <div><strong>Order timer (demo)</strong><small>This countdown is only a visual demo</small></div>
+    <div class="clock" id="clock">09 : 58</div>
+  </div>
+
+  <div class="card">
+    <div class="line">
+      <div><div class="label">Amount to Pay</div><div class="value" id="amount">₹ 0</div></div>
+      <button class="copy" onclick="copyText(document.getElementById('amount').textContent)">COPY</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="line">
+      <div style="min-width:0"><div class="label">VPA / UPI ID</div><div class="value" id="vpa" style="font-size:clamp(18px,5vw,25px)">Not configured</div></div>
+      <button class="copy" onclick="copyText(rawVpa || document.getElementById('vpa').textContent)">COPY</button>
+    </div>
+    <div class="muted" style="margin:10px 0 0">Demo page only. Confirm payment details with your authorized provider.</div>
+  </div>
+
+  <section class="section">
+    <h2>Pay using any UPI app</h2>
+    <p class="muted">These are visual demo buttons; no payment is initiated.</p>
+    <div class="apps">
+      <div class="app"><div class="logo">पे</div><strong>PhonePe</strong><br><button type="button" onclick="demoApp('PhonePe')">Pay Now</button></div>
+      <div class="app"><div class="logo">paytm</div><strong>Paytm</strong><br><button type="button" onclick="demoApp('Paytm')">Pay Now</button></div>
+      <div class="app"><div class="logo">G</div><strong>Google Pay</strong><br><button type="button" onclick="demoApp('Google Pay')">Pay Now</button></div>
+      <div class="app"><div class="logo">BHIM</div><strong>BHIM UPI</strong><br><button type="button" onclick="demoApp('BHIM UPI')">Pay Now</button></div>
+    </div>
+  </section>
+
+  <div class="card">
+    <label for="utr">Enter UTR Number</label>
+    <div class="muted">Enter 12-digit reference for demo input validation</div>
+    <input id="utr" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="Enter 12-digit UTR number">
+    <button class="submit" onclick="submitUTR()">Submit UTR &nbsp; ›</button>
+    <p id="message" aria-live="polite"></p>
+  </div>
+
+  <section class="notice">
+    <h2>Important Notice</h2>
+    <ol>
+      <li>One UPI can only transfer money <span style="color:#ffdc00">once.</span></li>
+      <li>Do not change the payment amount.</li>
+      <li>Do not pay again in the UPI friend chat window.</li>
+      <li>Submit the UTR after completing payment.</li>
+    </ol>
+    <p style="color:#aeb3bb;margin:12px 0 0">Otherwise, the order cannot be closed.</p>
+    <p style="color:#ffdc00;font-weight:800;text-align:center;margin:18px 0 0">DEMO ONLY — payment and UTR are not verified.</p>
+  </section>
+  <p class="demo">DEMO PAGE — no payment is collected or verified.</p>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const amount = params.get('amount');
+    const rawVpa = params.get('vpa') || '';
+    if (amount && /^\d+(\.\d{1,2})?$/.test(amount)) {
+      document.getElementById('amount').textContent = '₹ ' + Number(amount).toLocaleString('en-IN');
+    }
+    if (rawVpa) {
+      const masked = rawVpa.length > 7 ? rawVpa.slice(0, 4) + '****' + rawVpa.slice(rawVpa.indexOf('@')) : rawVpa;
+      document.getElementById('vpa').textContent = masked;
+    }
+    async function copyText(value) {
+      try {
+        await navigator.clipboard.writeText(value);
+        alert('Copied');
+      } catch (e) {
+        const el = document.createElement('textarea');
+        el.value = value; document.body.appendChild(el); el.select();
+        document.execCommand('copy'); el.remove(); alert('Copied');
+      }
+    }
+    function submitUTR() {
+      const value = document.getElementById('utr').value.trim();
+      const message = document.getElementById('message');
+      if (!/^\d{12}$/.test(value)) {
+        message.textContent = 'Enter a valid 12-digit reference number.';
+        message.style.color = '#b00020';
+      } else {
+        message.textContent = 'Demo only: reference entered. Payment has not been verified.';
+        message.style.color = '#8a6d00';
+      }
+    }
+    function demoApp(name) { alert(name + ' button is for display only. No payment was started.'); }
+    let seconds = 598;
+    setInterval(() => {
+      if (seconds > 0) seconds--;
+      document.getElementById('clock').textContent =
+        String(Math.floor(seconds / 60)).padStart(2, '0') + ' : ' +
+        String(seconds % 60).padStart(2, '0');
+    }, 1000);
+  </script>
+</body>
+</html>
