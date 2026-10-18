@@ -1,150 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Repayment Page — Demo</title>
-  <style>
-    :root { --yellow: #ffdc00; --bg: #090b0d; --muted: #aeb3bb; }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; padding: 18px; background: var(--bg); color: #fff;
-      font-family: Arial, Helvetica, sans-serif; max-width: 560px; margin-inline: auto;
-    }
-    header { text-align: center; padding: 12px 0 20px; }
-    header .mark { color: var(--yellow); font-size: 34px; font-weight: 900; }
-    header h1 { margin: 2px 0; font-size: 29px; }
-    header h1 span { color: var(--yellow); }
-    header p { color: var(--muted); letter-spacing: 2px; font-size: 11px; }
-    .timer {
-      border: 1px solid #777; border-radius: 18px; padding: 16px;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      margin-bottom: 16px;
-    }
-    .timer strong { display: block; font-size: 16px; }
-    .timer small { color: #c5c8cc; display: block; margin-top: 5px; }
-    .clock { background: var(--yellow); color: #111; padding: 12px; border-radius: 10px; font-weight: 800; white-space: nowrap; }
-    .card { background: #fffdf0; color: #101114; padding: 18px; margin: 14px 0; border-radius: 17px; }
-    .line { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-    .label { color: #555; font-size: 14px; margin-bottom: 7px; }
-    .value { font-size: clamp(21px, 6vw, 30px); font-weight: 800; overflow-wrap: anywhere; }
-    .copy { border: 0; border-radius: 12px; padding: 13px 15px; background: var(--yellow); color: #111; font-weight: 800; cursor: pointer; }
-    .section { border: 1px solid #45484d; border-radius: 17px; padding: 17px; margin: 14px 0; }
-    .section h2 { font-size: 19px; margin: 0 0 6px; }
-    .muted { color: var(--muted); font-size: 14px; margin-top: 0; }
-    .apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-    .app { border: 1px solid #44474c; border-radius: 13px; padding: 16px 8px; text-align: center; }
-    .app .logo { color: var(--yellow); font-size: 22px; font-weight: 900; margin-bottom: 9px; }
-    .app button { margin-top: 10px; border: 1px solid var(--yellow); color: var(--yellow); background: transparent; border-radius: 20px; padding: 8px 16px; font-weight: 700; }
-    label { display: block; font-weight: 800; margin-bottom: 8px; }
-    input { width: 100%; border: 1px solid #444; border-radius: 10px; padding: 14px; font-size: 16px; margin: 6px 0 12px; }
-    .submit { width: 100%; border: 0; border-radius: 28px; padding: 15px; background: var(--yellow); font-size: 17px; font-weight: 800; cursor: pointer; }
-    .notice { border: 1px solid #45484d; border-radius: 17px; padding: 18px; }
-    .notice h2 { color: var(--yellow); margin-top: 0; }
-    .notice li { margin: 9px 0; line-height: 1.4; }
-    .demo { font-size: 12px; color: #aeb3bb; text-align: center; margin: 18px 0 6px; }
-    @media (min-width: 420px) { .apps { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Repayment — Demo</title>
+<style>
+:root{--y:#ffdc00;--black:#07090a;--white:#fff;--muted:#c4c5c8;--line:#45474a}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;background:var(--black);color:#fff;font-family:Arial,Helvetica,sans-serif}
+body{overflow:hidden}
+.page{width:100%;max-width:900px;height:100svh;min-height:620px;margin:auto;padding:clamp(10px,2.2vw,25px) clamp(12px,3.2vw,28px) 8px;display:flex;flex-direction:column;gap:clamp(7px,1.05vh,16px);position:relative;isolation:isolate}
+.wave{position:absolute;z-index:-1;top:0;left:0;width:100%;height:130px}
+.brand{height:clamp(70px,11.5vh,105px);flex-shrink:0;display:flex;justify-content:center;align-items:center;gap:clamp(10px,2.3vw,22px);margin-top:-2px}
+.brand-logo{width:clamp(40px,7.4vw,64px);height:clamp(48px,8.5vh,76px);flex-shrink:0}
+.brand-copy{min-width:0}
+.brand-name{font-weight:800;font-size:clamp(28px,5.2vw,48px);letter-spacing:-1.5px;line-height:1.03;white-space:nowrap;margin:0}
+.brand-name span{color:var(--y)}
+.tagline{font-size:clamp(9px,1.7vw,15px);letter-spacing:clamp(1.6px,.45vw,3.3px);color:#c5c6c9;margin-top:7px;white-space:nowrap}
+.timer{height:clamp(78px,13vh,110px);flex-shrink:0;border:1.5px solid #ddd;border-radius:clamp(15px,2.8vw,23px);display:flex;align-items:center;justify-content:space-between;padding:clamp(10px,2.6vw,22px);gap:8px}
+.timer-left{display:flex;align-items:center;gap:clamp(10px,2.4vw,20px);min-width:0}
+.clock{width:clamp(42px,7.5vw,64px);height:clamp(42px,7.5vw,64px);border:clamp(4px,.8vw,6px) solid var(--y);border-radius:50%;display:grid;place-items:center;flex-shrink:0}
+.clock svg{width:78%;height:78%;stroke:var(--y);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.timer-title{font-weight:800;font-size:clamp(14px,2.65vw,25px);line-height:1.1;white-space:nowrap}
+.timer-sub{font-size:clamp(10px,1.85vw,17px);color:#ddd;margin-top:7px;white-space:nowrap}
+.digits{display:flex;align-items:center;gap:clamp(4px,1vw,9px);flex-shrink:0}
+.digit{width:clamp(42px,11vw,86px);height:clamp(43px,8.6vh,68px);border-radius:clamp(8px,1.5vw,13px);display:grid;place-items:center;background:var(--y);color:#08090a;font-weight:900;font-size:clamp(22px,4.1vw,37px)}
+.colon{color:var(--y);font-weight:900;font-size:clamp(22px,3.7vw,34px)}
+.info-card{height:clamp(88px,15.2vh,132px);flex-shrink:0;background:#fff;color:#090a0b;border-radius:clamp(15px,2.8vw,22px);box-shadow:0 0 0 1px #fff4a5,0 0 12px #ffdc0026;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:clamp(12px,2.5vw,22px) clamp(12px,2.8vw,24px)}
+.info-left{display:flex;align-items:center;gap:clamp(12px,3.3vw,28px);min-width:0}
+.icon-tile{width:clamp(49px,10vw,78px);height:clamp(49px,10vw,78px);border-radius:clamp(10px,1.8vw,14px);background:linear-gradient(135deg,#ffe941,var(--y));display:grid;place-items:center;flex-shrink:0}
+.icon-tile svg{width:65%;height:65%;stroke:#08090a;fill:none;stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round}
+.icon-tile .solid{fill:#08090a;stroke:#08090a}
+.label{color:#59595d;font-size:clamp(14px,2.4vw,22px);margin-bottom:4px;white-space:nowrap}
+.amount{font-size:clamp(26px,5vw,43px);font-weight:800;letter-spacing:-.7px;white-space:nowrap;line-height:1.1}
+.vpa{font-size:clamp(21px,4.2vw,36px)}
+.copy{height:clamp(45px,8.8vh,66px);min-width:clamp(100px,22vw,160px);border:0;border-radius:clamp(10px,1.8vw,15px);background:var(--y);color:#08090a;font-size:clamp(14px,2.5vw,22px);font-weight:900;display:flex;align-items:center;justify-content:center;gap:clamp(7px,1.5vw,13px);flex-shrink:0;cursor:pointer}
+.copy svg{width:clamp(22px,3.8vw,32px);height:clamp(22px,3.8vw,32px);stroke:#08090a;fill:none;stroke-width:2.5;stroke-linejoin:round}
+.apps-panel{flex:1;min-height:118px;border:1.5px solid var(--line);border-radius:clamp(15px,2.8vw,22px);padding:clamp(11px,2.1vh,20px) clamp(12px,2.8vw,22px);display:flex;flex-direction:column}
+.section-title{font-size:clamp(17px,2.8vw,25px);font-weight:800;margin:0 0 5px;line-height:1.1}
+.section-sub{font-size:clamp(12px,1.9vw,17px);color:#bdbec2;margin:0}
+.apps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(6px,1.8vw,15px);margin-top:auto;padding-top:10px;min-height:0}
+.app{border:1.5px solid #414347;border-radius:clamp(12px,2vw,18px);display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:7px 2px 8px;gap:clamp(4px,.9vh,8px)}
+.app-logo{height:clamp(37px,7.2vh,62px);width:100%;display:flex;align-items:center;justify-content:center;font-weight:900;white-space:nowrap}
+.phone-logo{width:clamp(37px,7vw,60px);height:clamp(37px,7vw,60px);border-radius:50%;background:#7024bd;color:#fff;font-size:clamp(26px,4.7vw,42px)}
+.paytm-logo{font-size:clamp(18px,3.7vw,32px);letter-spacing:-1.5px;color:#fff}.paytm-logo span{color:#00b9e8}
+.google-logo svg{width:clamp(39px,7vw,60px);height:clamp(39px,7vw,60px)}
+.bhim-logo{font-size:clamp(15px,2.8vw,25px);font-style:italic;letter-spacing:-.8px}.bhim-logo span{color:#22c76b}
+.app-name{font-size:clamp(10px,1.8vw,16px);font-weight:700;white-space:nowrap}
+.pay-now{border:1.5px solid var(--y);background:transparent;color:var(--y);border-radius:30px;padding:clamp(4px,.9vh,7px) clamp(8px,1.8vw,16px);font-size:clamp(10px,1.8vw,16px);font-weight:800;white-space:nowrap}
+.utr-panel{height:clamp(165px,27vh,235px);flex-shrink:0;background:#fffbed;color:#090a0b;border-radius:clamp(15px,2.8vw,22px);box-shadow:0 0 0 1px #fff4a5;padding:clamp(12px,2.3vh,20px) clamp(12px,2.8vw,22px);display:flex;flex-direction:column}
+.utr-head{display:flex;align-items:center;gap:clamp(10px,2.2vw,18px);margin-bottom:clamp(8px,1.7vh,14px)}
+.utr-head .icon-tile{width:clamp(42px,7.2vw,58px);height:clamp(42px,7.2vw,58px);border-radius:10px}
+.utr-title{font-weight:900;font-size:clamp(16px,2.6vw,23px)}.utr-sub{color:#48484b;font-size:clamp(12px,1.9vw,17px);margin-top:4px}
+.input-row{height:clamp(42px,7.8vh,62px);flex-shrink:0;border:1.5px solid #242629;border-radius:clamp(10px,1.8vw,15px);background:#fff;display:flex;align-items:center;padding:0 clamp(10px,2.2vw,18px);gap:clamp(10px,2vw,17px)}
+.input-row svg{width:clamp(24px,4vw,34px);height:clamp(24px,4vw,34px);stroke:#101114;fill:none;stroke-width:2.3;flex-shrink:0}
+.input-row input{font:inherit;font-size:clamp(13px,2.1vw,19px);border:0;outline:0;width:100%;min-width:0;background:transparent;color:#111}
+.submit{height:clamp(43px,7.8vh,62px);flex-shrink:0;margin-top:clamp(7px,1.4vh,12px);border:0;border-radius:40px;background:var(--y);font-size:clamp(17px,2.6vw,24px);font-weight:900;color:#08090a}
+.feedback{font-size:11px;margin:4px 0 0;min-height:12px}
+.notice{flex:1;min-height:112px;border:1.5px solid var(--line);border-radius:clamp(15px,2.8vw,22px);display:flex;gap:clamp(12px,2.5vw,22px);padding:clamp(11px,2vh,18px) clamp(13px,2.8vw,23px)}
+.warn{width:clamp(34px,5.8vw,49px);flex-shrink:0;padding-top:2px}.warn svg{width:100%;height:auto}
+.notice-content{min-width:0;flex:1}
+.notice-title{color:var(--y);font-weight:900;font-size:clamp(17px,2.7vw,24px);margin:0 0 clamp(5px,1vh,9px)}
+.notice-list{list-style:none;padding:0;margin:0;counter-reset:n}
+.notice-list li{counter-increment:n;display:flex;align-items:center;gap:clamp(8px,1.7vw,14px);font-size:clamp(11px,1.85vw,17px);line-height:1.22;margin:clamp(4px,.8vh,7px) 0}
+.notice-list li:before{content:counter(n);width:clamp(21px,3.3vw,29px);height:clamp(21px,3.3vw,29px);flex-shrink:0;border-radius:50%;background:var(--y);color:#111;display:grid;place-items:center;font-size:clamp(12px,1.8vw,17px);font-weight:900}
+.notice-end{font-size:clamp(11px,1.8vw,16px);color:#b9babe;margin:6px 0 0}
+.demo-label{text-align:center;color:var(--y);font-size:9px;letter-spacing:.7px;margin-top:5px}
+.support{height:18px;flex-shrink:0;display:flex;align-items:center;gap:12px;color:#bfc0c3;font-size:clamp(11px,1.7vw,15px);justify-content:center}
+.support:before,.support:after{content:"";height:1px;background:#555;flex:1}
+.footer-apps{height:clamp(24px,4.4vh,38px);flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:clamp(7px,1.7vw,15px);font-size:clamp(12px,2.2vw,20px);font-weight:700;white-space:nowrap}
+.sep{height:75%;width:1px;background:#777}
+.footer-phone{color:#a34be1;font-size:clamp(19px,3vw,27px)}
+.toast{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);display:none;background:var(--y);color:#111;font-weight:800;border-radius:20px;padding:8px 20px;z-index:5}
+@media(max-height:740px){.page{gap:6px;padding-top:6px}.brand{height:65px}.timer{height:75px}.info-card{height:86px}.apps-panel{padding-top:8px;padding-bottom:8px}.app{gap:3px}.app-logo{height:35px}.phone-logo{width:35px;height:35px;font-size:25px}.google-logo svg{width:36px;height:36px}.utr-panel{height:146px;padding-top:9px;padding-bottom:9px}.utr-head{margin-bottom:6px}.utr-head .icon-tile{width:38px;height:38px}.input-row{height:38px}.submit{height:38px;margin-top:6px}.notice{padding-top:8px;padding-bottom:8px}.notice-list li{margin:3px 0}.notice-list li:before{width:19px;height:19px}.notice-end{margin-top:3px}.demo-label{font-size:8px;margin-top:2px}.support{height:13px}.footer-apps{height:22px}}
+@media(max-width:420px){.page{padding-left:12px;padding-right:12px;gap:7px}.brand{height:clamp(67px,10vh,83px)}.brand-logo{width:43px}.brand-name{font-size:clamp(27px,7vw,32px);letter-spacing:-1.1px}.tagline{font-size:9px;letter-spacing:1.7px}.timer{height:clamp(76px,11.5vh,90px);padding:10px}.timer-left{gap:9px}.timer-title{font-size:clamp(13px,3.7vw,16px)}.timer-sub{font-size:clamp(9px,2.6vw,11px);margin-top:5px}.clock{width:42px;height:42px}.digit{width:clamp(38px,11vw,46px);height:42px;font-size:22px;border-radius:8px}.colon{font-size:22px}.info-card{height:clamp(83px,12vh,98px);padding:10px 12px}.info-left{gap:11px}.icon-tile{width:48px;height:48px}.label{font-size:13px}.amount{font-size:clamp(25px,7vw,29px)}.vpa{font-size:clamp(19px,5.4vw,23px)}.copy{min-width:92px;height:44px;padding:8px;font-size:13px;gap:6px}.copy svg{width:21px;height:21px}.apps-panel{padding:10px;border-radius:15px}.section-title{font-size:17px}.section-sub{font-size:12px}.apps{gap:5px;padding-top:7px}.app{border-radius:11px;padding:5px 1px;gap:4px}.app-logo{height:34px}.phone-logo{width:34px;height:34px;font-size:25px}.paytm-logo{font-size:18px;letter-spacing:-1px}.google-logo svg{width:34px;height:34px}.bhim-logo{font-size:15px}.app-name{font-size:clamp(9px,2.5vw,11px)}.pay-now{font-size:clamp(9px,2.5vw,11px);padding:5px 7px}.utr-panel{height:clamp(145px,21vh,170px);padding:10px 12px}.utr-head{gap:9px;margin-bottom:7px}.utr-head .icon-tile{width:38px;height:38px}.utr-title{font-size:16px}.utr-sub{font-size:11px}.input-row{height:39px;padding:0 9px;gap:9px}.input-row svg{width:23px;height:23px}.input-row input{font-size:12px}.submit{height:40px;font-size:17px;margin-top:6px}.feedback{font-size:9px;min-height:9px}.notice{padding:9px 10px;gap:9px;border-radius:15px}.warn{width:29px}.notice-title{font-size:17px;margin-bottom:5px}.notice-list li{font-size:clamp(10px,2.7vw,11px);gap:6px;margin:4px 0}.notice-list li:before{width:19px;height:19px;font-size:12px}.notice-end{font-size:10px;margin-top:4px}.demo-label{font-size:7px}.support{font-size:10px;gap:7px}.footer-apps{gap:6px;font-size:clamp(10px,2.8vw,12px)}.footer-phone{font-size:18px}}
+
+/* Compact single-viewport correction */
+@media (max-width: 600px) {
+  html, body {height:100%; overflow:hidden}
+  .page {
+    height:100svh; min-height:0; max-height:100svh;
+    padding:4px 12px 5px; gap:5px;
+    display:grid;
+    grid-template-rows: 8.5% 10.5% 11% 11% minmax(105px,17%) 17% minmax(105px,16%) 2% 3.5%;
+    align-content:stretch;
+  }
+  .wave {height:100px}
+  .brand {height:auto; min-height:0; margin:0; gap:10px}
+  .brand-logo {width:39px;height:47px}
+  .brand-name {font-size:clamp(24px,6.5vw,31px);letter-spacing:-1px}
+  .tagline {font-size:8px;letter-spacing:1.4px;margin-top:5px}
+  .timer {height:auto; min-height:0; padding:7px 9px; border-radius:15px; gap:5px}
+  .timer-left {gap:7px}
+  .clock {width:35px;height:35px;border-width:3px}
+  .timer-title {font-size:clamp(11px,3.3vw,14px)}
+  .timer-sub {font-size:clamp(8px,2.3vw,10px);margin-top:4px;white-space:normal;line-height:1.15}
+  .digits {gap:3px}
+  .digit {width:clamp(32px,10vw,43px);height:36px;font-size:20px;border-radius:7px}
+  .colon {font-size:19px}
+  .info-card {height:auto;min-height:0;padding:7px 9px;border-radius:15px;gap:5px}
+  .info-left {gap:9px}
+  .icon-tile {width:39px;height:39px;border-radius:8px}
+  .label {font-size:12px;margin-bottom:3px}
+  .amount {font-size:clamp(22px,6.4vw,28px)}
+  .vpa {font-size:clamp(17px,5vw,22px)}
+  .copy {height:37px;min-width:83px;border-radius:9px;font-size:12px;gap:5px;padding:5px}
+  .copy svg {width:19px;height:19px}
+  .apps-panel {height:auto;min-height:0;padding:8px 9px;border-radius:15px;overflow:hidden}
+  .section-title {font-size:16px;margin-bottom:3px}
+  .section-sub {font-size:11px}
+  .apps {gap:5px;padding-top:6px;min-height:0}
+  .app {padding:4px 1px;gap:3px;border-radius:10px}
+  .app-logo {height:29px}
+  .phone-logo {width:29px;height:29px;font-size:22px}
+  .paytm-logo {font-size:16px;letter-spacing:-1px}
+  .google-logo svg {width:30px;height:30px}
+  .bhim-logo {font-size:13px}
+  .app-name {font-size:clamp(8px,2.3vw,10px)}
+  .pay-now {font-size:clamp(8px,2.3vw,10px);padding:4px 5px}
+  .utr-panel {height:auto;min-height:0;padding:8px 9px;border-radius:15px;overflow:hidden}
+  .utr-head {gap:8px;margin-bottom:5px}
+  .utr-head .icon-tile {width:33px;height:33px}
+  .utr-title {font-size:14px}
+  .utr-sub {font-size:10px;margin-top:2px}
+  .input-row {height:34px;padding:0 8px;gap:7px;border-radius:9px}
+  .input-row svg {width:20px;height:20px}
+  .input-row input {font-size:11px}
+  .submit {height:34px;margin-top:5px;font-size:15px}
+  .feedback {font-size:8px;min-height:0;margin-top:2px}
+  .notice {height:auto;min-height:0;padding:7px 8px;gap:7px;border-radius:15px;overflow:hidden}
+  .warn {width:24px}
+  .notice-title {font-size:15px;margin-bottom:3px}
+  .notice-list li {font-size:clamp(8px,2.3vw,10px);gap:5px;margin:3px 0;line-height:1.12}
+  .notice-list li:before {width:16px;height:16px;font-size:10px}
+  .notice-end {font-size:9px;margin-top:3px}
+  .demo-label {font-size:6px;letter-spacing:.3px;margin-top:2px}
+  .support {height:auto;min-height:0;font-size:9px;gap:6px}
+  .footer-apps {height:auto;min-height:0;gap:5px;font-size:clamp(9px,2.5vw,11px)}
+  .footer-phone {font-size:16px}
+  .sep {height:70%}
+}
+@media (max-height: 760px) and (max-width: 600px) {
+  .page {gap:3px;padding-top:2px;padding-bottom:2px;grid-template-rows:7.5% 10% 10.5% 10.5% minmax(90px,16%) 16% minmax(90px,18%) 2% 3.5%}
+  .brand-logo {width:34px;height:40px}
+  .brand-name {font-size:clamp(22px,6vw,28px)}
+  .clock {width:30px;height:30px}
+  .digit {height:31px;width:clamp(29px,9vw,38px);font-size:17px}
+  .icon-tile {width:34px;height:34px}
+  .amount {font-size:clamp(20px,5.8vw,25px)}
+  .vpa {font-size:clamp(16px,4.7vw,20px)}
+  .copy {min-width:75px;height:32px;font-size:11px}
+  .app-logo {height:24px}
+  .phone-logo {width:25px;height:25px;font-size:19px}
+  .google-logo svg {width:25px;height:25px}
+  .pay-now {padding:3px 4px}
+  .utr-head .icon-tile {width:29px;height:29px}
+  .input-row {height:29px}
+  .submit {height:30px;font-size:14px;margin-top:3px}
+  .notice-list li {margin:2px 0}
+}
+
+</style>
 </head>
 <body>
-  <header>
-    <div class="mark">➤</div>
-    <h1>Repay<span>ment</span></h1>
-    <p>FAST · SECURE · RELIABLE</p>
-  </header>
-
-  <div class="timer">
-    <div><strong>Order timer (demo)</strong><small>This countdown is only a visual demo</small></div>
-    <div class="clock" id="clock">09 : 58</div>
-  </div>
-
-  <div class="card">
-    <div class="line">
-      <div><div class="label">Amount to Pay</div><div class="value" id="amount">₹ 0</div></div>
-      <button class="copy" onclick="copyText(document.getElementById('amount').textContent)">COPY</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="line">
-      <div style="min-width:0"><div class="label">VPA / UPI ID</div><div class="value" id="vpa" style="font-size:clamp(18px,5vw,25px)">Not configured</div></div>
-      <button class="copy" onclick="copyText(rawVpa || document.getElementById('vpa').textContent)">COPY</button>
-    </div>
-    <div class="muted" style="margin:10px 0 0">Demo page only. Confirm payment details with your authorized provider.</div>
-  </div>
-
-  <section class="section">
-    <h2>Pay using any UPI app</h2>
-    <p class="muted">These are visual demo buttons; no payment is initiated.</p>
-    <div class="apps">
-      <div class="app"><div class="logo">पे</div><strong>PhonePe</strong><br><button type="button" onclick="demoApp('PhonePe')">Pay Now</button></div>
-      <div class="app"><div class="logo">paytm</div><strong>Paytm</strong><br><button type="button" onclick="demoApp('Paytm')">Pay Now</button></div>
-      <div class="app"><div class="logo">G</div><strong>Google Pay</strong><br><button type="button" onclick="demoApp('Google Pay')">Pay Now</button></div>
-      <div class="app"><div class="logo">BHIM</div><strong>BHIM UPI</strong><br><button type="button" onclick="demoApp('BHIM UPI')">Pay Now</button></div>
-    </div>
-  </section>
-
-  <div class="card">
-    <label for="utr">Enter UTR Number</label>
-    <div class="muted">Enter 12-digit reference for demo input validation</div>
-    <input id="utr" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="Enter 12-digit UTR number">
-    <button class="submit" onclick="submitUTR()">Submit UTR &nbsp; ›</button>
-    <p id="message" aria-live="polite"></p>
-  </div>
-
-  <section class="notice">
-    <h2>Important Notice</h2>
-    <ol>
-      <li>One UPI can only transfer money <span style="color:#ffdc00">once.</span></li>
-      <li>Do not change the payment amount.</li>
-      <li>Do not pay again in the UPI friend chat window.</li>
-      <li>Submit the UTR after completing payment.</li>
-    </ol>
-    <p style="color:#aeb3bb;margin:12px 0 0">Otherwise, the order cannot be closed.</p>
-    <p style="color:#ffdc00;font-weight:800;text-align:center;margin:18px 0 0">DEMO ONLY — payment and UTR are not verified.</p>
-  </section>
-  <p class="demo">DEMO PAGE — no payment is collected or verified.</p>
-
-  <script>
-    const params = new URLSearchParams(location.search);
-    const amount = params.get('amount');
-    const rawVpa = params.get('vpa') || '';
-    if (amount && /^\d+(\.\d{1,2})?$/.test(amount)) {
-      document.getElementById('amount').textContent = '₹ ' + Number(amount).toLocaleString('en-IN');
-    }
-    if (rawVpa) {
-      const masked = rawVpa.length > 7 ? rawVpa.slice(0, 4) + '****' + rawVpa.slice(rawVpa.indexOf('@')) : rawVpa;
-      document.getElementById('vpa').textContent = masked;
-    }
-    async function copyText(value) {
-      try {
-        await navigator.clipboard.writeText(value);
-        alert('Copied');
-      } catch (e) {
-        const el = document.createElement('textarea');
-        el.value = value; document.body.appendChild(el); el.select();
-        document.execCommand('copy'); el.remove(); alert('Copied');
-      }
-    }
-    function submitUTR() {
-      const value = document.getElementById('utr').value.trim();
-      const message = document.getElementById('message');
-      if (!/^\d{12}$/.test(value)) {
-        message.textContent = 'Enter a valid 12-digit reference number.';
-        message.style.color = '#b00020';
-      } else {
-        message.textContent = 'Demo only: reference entered. Payment has not been verified.';
-        message.style.color = '#8a6d00';
-      }
-    }
-    function demoApp(name) { alert(name + ' button is for display only. No payment was started.'); }
-    let seconds = 598;
-    setInterval(() => {
-      if (seconds > 0) seconds--;
-      document.getElementById('clock').textContent =
-        String(Math.floor(seconds / 60)).padStart(2, '0') + ' : ' +
-        String(seconds % 60).padStart(2, '0');
-    }, 1000);
-  </script>
-</body>
-</html>
+<main class="page">
+<svg class="wave" viewBox="0 0 900 130" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe73b"/><stop offset="1" stop-color="#8b7400"/></linearGradient></defs><path d="M-40 38C55-9 112 27 166 66S277 114 355 134" stroke="#746100" stroke-width="22" opacity=".23" fill="none"/><path d="M-40 37C55-10 112 26 166 65S277 113 355 133" stroke="url(#gold)" stroke-width="5" fill="none"/><path d="M-35 55C48 13 107 47 163 80S273 125 350 139" stroke="#b59a00" stroke-width="1.5" fill="none" opacity=".8"/><path d="M940 38C845-9 788 27 734 66S623 114 545 134" stroke="#746100" stroke-width="22" opacity=".23" fill="none"/><path d="M940 37C845-10 788 26 734 65S623 113 545 133" stroke="url(#gold)" stroke-width="5" fill="none"/><path d="M935 55C852 13 793 47 737 80S627 125 550 139" stroke="#b59a00" stroke-width="1.5" fill="none" opacity=".8"/></svg>
+<header class="brand"><svg class="brand-logo" viewBox="0 0 54 66" aria-label="Repayment logo"><path fill="#ffdc00" d="M8 3 42 22 42 38 25 49 25 31 8 41Z"/><path fill="#ffdc00" d="M8 3 25 13 25 31 8 41Z"/><path fill="#080a0b" d="M25 13 42 22 42 31 25 22Z"/></svg><div class="brand-copy"><h1 class="brand-name">Repay<span>ment</span></h1><div class="tagline">FAST · SECURE · RELIABLE</div></div></header>
+<section class="timer"><div class="timer-left"><div class="clock"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.5v5.8l4 2.3"/></svg></div><div><div class="timer-title">Order will be closed in</div><div class="timer-sub">Complete the payment before time runs out</div></div></div><div class="digits"><span class="digit" id="mins">09</span><span class="colon">:</span><span class="digit" id="secs">58</span></div></section>
+<section class="info-card"><div class="info-left"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M5 5h14M5 9h14M7 5l10 14M5 13h9"/></svg></div><div><div class="label">Amount to Pay</div><div class="amount" id="amount">₹ 8,200</div></div></div><button class="copy" onclick="copyAmount()"><svg viewBox="0 0 24 24"><rect x="8" y="7" width="12" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/></svg>COPY</button></section>
+<section class="info-card"><div class="info-left"><div class="icon-tile"><svg viewBox="0 0 24 24"><circle class="solid" cx="12" cy="7" r="3.4"/><path class="solid" d="M4.5 21v-2.6a7.5 7.5 0 0 1 15 0V21z"/></svg></div><div><div class="label">VPA / UPI ID</div><div class="amount vpa" id="masked">mrsu****@axl</div></div></div><button class="copy" onclick="copyVpa()"><svg viewBox="0 0 24 24"><rect x="8" y="7" width="12" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/></svg>COPY</button></section>
+<section class="apps-panel"><h2 class="section-title">Pay using any UPI app</h2><p class="section-sub">Tap your preferred app to open</p><div class="apps">
+<div class="app"><div class="app-logo"><div class="phone-logo">पे</div></div><div class="app-name">PhonePe</div><button class="pay-now" onclick="demoApp('PhonePe')">Pay Now</button></div>
+<div class="app"><div class="app-logo paytm-logo">pay<span>tm</span></div><div class="app-name">Paytm</div><button class="pay-now" onclick="demoApp('Paytm')">Pay Now</button></div>
+<div class="app"><div class="app-logo google-logo"><svg viewBox="0 0 48 48"><path fill="#4285F4" d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11a9.4 9.4 0 0 1-4.1 6.2v5.1h6.6c3.9-3.6 6.1-8.8 6.1-15z"/><path fill="#34A853" d="M24 44c5.5 0 10.1-1.8 13.5-4.9l-6.6-5.1c-1.8 1.2-4.1 2-6.9 2-5.3 0-9.8-3.6-11.4-8.4H5.8v5.3A20 20 0 0 0 24 44z"/><path fill="#FBBC05" d="M12.6 27.6a12 12 0 0 1 0-7.2v-5.3H5.8a20 20 0 0 0 0 17.8z"/><path fill="#EA4335" d="M24 12c3 0 5.7 1 7.8 3.1l5.8-5.8C34.1 5.9 29.5 4 24 4A20 20 0 0 0 5.8 15.1l6.8 5.3C14.2 15.6 18.7 12 24 12z"/></svg></div><div class="app-name">Google Pay</div><button class="pay-now" onclick="demoApp('Google Pay')">Pay Now</button></div>
+<div class="app"><div class="app-logo bhim-logo">BHIM<span>▲</span></div><div class="app-name">BHIM UPI</div><button class="pay-now" onclick="demoApp('BHIM UPI')">Pay Now</button></div>
+</div></section>
+<section class="utr-panel"><div class="utr-head"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M5 4h14v15H5zM8 8h8M8 12h8M8 16h5"/></svg></div><div><div class="utr-title">Enter UTR Number</div><div class="utr-sub">Enter 12-digit UTR after payment</div></div></div><div class="input-row"><svg viewBox="0 0 24 24"><path d="M4 4h16v15H4zM7 8h10M7 12h10M7 16h6"/></svg><input id="utr" inputmode="numeric" maxlength="12" placeholder="Enter 12-digit UTR number" aria-label="Enter 12-digit UTR number"></div><button class="submit" onclick="submitUTR()">Submit UTR &nbsp; ❯</button><p class="feedback" id="feedback"></p></section>
+<section class="notice"><div class="warn"><svg viewBox="0 0 50 50"><path d="M25 3 47 44H3Z" fill="#ffdc00"/><path d="M25 15v14M25 36h.1" stroke="#08090a" stroke-width="4" stroke-linecap="round"/></svg></div><div class="notice-content"><h2 class="notice-title">Important Notice</h2><ol class="notice-list"><li>One UPI can only transfer money <span style="color:var(--y)">once.</span></li><li>Do not change the payment amount.</li><li>Do not pay again in the UPI friend chat window.</li><li>Submit the UTR after completing payment.</li></ol><p class="notice-end">Otherwise, the order cannot be closed.</p><div class="demo-label">DEMO ONLY · NO PAYMENT OR UTR VERIFICATION</div></div></section>
+<div class="support">Supported UPI Apps</div><footer class="footer-apps"><span class="footer-phone">पे</span><span>PhonePe</span><span class="sep"></span><span>pay<span style="color:#00b9e8">tm</span></span><span class="sep"></span><span style="font-size:clamp(19px,3vw,27px);color:#4285f4">G</span><span>Pay</span><span class="sep"></span><span style="font-style:italic">BHIM<span style="color:#22c76b">▲</span></span></footer>
+</main><div class="toast" id="toast">Copied</div>
+<script>
+const params=new URLSearchParams(location.search);
+const amount=params.get('amount');
+const vpa=params.get('vpa')||'mrsurya98@axl';
+if(amount && /^\d+(?:\.\d{1,2})?$/.test(amount)) document.getElementById('amount').textContent='₹ '+Number(amount).toLocaleString('en-IN');
+document.getElementById('masked').textContent=(vpa.includes('@')?vpa.slice(0,4)+'****'+vpa.slice(vpa.indexOf('@')):vpa.slice(0,4)+'****');
+function showToast(){const t=document.getElementById('toast');t.style.display='block';setTimeout(()=>t.style.display='none',1100)}
+async function copyText(s){try{await navigator.clipboard.writeText(s)}catch(e){const el=document.createElement('textarea');el.value=s;document.body.appendChild(el);el.select();document.execCommand('copy');el.remove()}showToast()}
+function copyAmount(){copyText(document.getElementById('amount').textContent.replace('₹ ','').replace(/,/g,''))}
+function copyVpa(){copyText(vpa)}
+function demoApp(name){alert(name+' button is for visual demo only. No payment is initiated.')}
+function submitUTR(){const value=document.getElementById('utr').value.trim(),f=document.getElementById('feedback');if(!/^\d{12}$/.test(value)){f.textContent='Enter a valid 12-digit UTR number.';f.style.color='#a00020'}else{f.textContent='Demo only — UTR has not been verified.';f.style.color='#866900'}}
+let seconds=598;setInterval(()=>{if(seconds>0)seconds--;document.getElementById('mins').textContent=String(Math.floor(seconds/60)).padStart(2,'0');document.getElementById('secs').textContent=String(seconds%60).padStart(2,'0')},1000);
+</script>
+</body></html>
