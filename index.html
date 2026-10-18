@@ -460,24 +460,23 @@ body.notice-open{overflow:hidden}
 /* UTR submission wait modal, styled like the supplied reference */
 .utr-wait-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.54)}
 .utr-wait-overlay.show{display:flex}
-.utr-wait-card{width:min(90vw,610px);min-height:250px;background:#fff;border-radius:30px;padding:27px 24px 25px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 12px 42px rgba(0,0,0,.22);color:#273746}
-.utr-wait-title{font-size:clamp(24px,5vw,34px);font-weight:750;line-height:1.2;margin:0 0 24px}
-.utr-wait-message{font-size:clamp(17px,3.7vw,25px);line-height:1.35;color:#438fd0;margin:0 0 29px}
-.utr-wait-spinner{width:58px;height:58px;border:7px solid #dceeff;border-top-color:#328fe0;border-right-color:#328fe0;border-radius:50%;animation:utr-spin .85s linear infinite}
+.utr-wait-card{box-sizing:border-box;width:min(90vw,610px);height:auto;max-height:calc(100dvh - 40px);min-height:0;overflow:auto;background:#fff;border-radius:28px;padding:28px 24px 26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;text-align:center;box-shadow:0 12px 42px rgba(0,0,0,.22);color:#273746}
+.utr-wait-title{font-size:clamp(23px,4.8vw,32px);font-weight:750;line-height:1.2;margin:0 0 18px}
+.utr-wait-message{font-size:clamp(17px,3.5vw,23px);line-height:1.35;color:#438fd0;margin:0 0 22px}
+.utr-wait-spinner{box-sizing:border-box;flex:0 0 54px;width:54px;height:54px;border:6px solid #dceeff;border-top-color:#328fe0;border-right-color:#328fe0;border-radius:50%;animation:utr-spin .85s linear infinite}
 @keyframes utr-spin{to{transform:rotate(360deg)}}
-@media(max-width:480px){.utr-wait-card{width:min(90vw,420px);min-height:205px;padding:24px 18px;border-radius:24px}.utr-wait-title{margin-bottom:18px}.utr-wait-message{margin-bottom:23px}.utr-wait-spinner{width:48px;height:48px;border-width:6px}}
+@media(max-width:480px){.utr-wait-card{width:min(92vw,440px);height:auto;max-height:calc(100dvh - 40px);padding:25px 18px 24px;border-radius:24px}.utr-wait-title{font-size:clamp(22px,5.1vw,29px);margin-bottom:16px}.utr-wait-message{font-size:clamp(16px,4.1vw,20px);margin-bottom:19px}.utr-wait-spinner{flex-basis:50px;width:50px;height:50px;border-width:6px}}
 @media(prefers-reduced-motion:reduce){.utr-wait-spinner{animation:none}}
 
-
-.utr-wait-success{width:66px;height:66px;border-radius:50%;background:#ffdc00;display:grid;place-items:center;position:relative;animation:utr-pop .32s ease-out both}
-.utr-wait-success:after{content:"";width:24px;height:13px;border-left:5px solid #111;border-bottom:5px solid #111;transform:rotate(-45deg) translate(2px,-2px);animation:utr-check .35s .12s ease-out both}
-.utr-feedback-close{display:none;margin-top:22px;border:0;border-radius:999px;background:#ffdc00;color:#111;font-family:inherit;font-size:17px;font-weight:700;line-height:1.1;padding:13px 30px;min-width:170px;cursor:pointer}
+.utr-wait-success{box-sizing:border-box;flex:0 0 54px;width:54px;height:54px;border-radius:50%;background:#19a957;display:grid;place-items:center;position:relative;animation:utr-pop .32s ease-out both}
+.utr-wait-success:after{content:"";width:22px;height:12px;border-left:5px solid #fff;border-bottom:5px solid #fff;transform:rotate(-45deg) translate(2px,-2px);animation:utr-check .35s .12s ease-out both}
+.utr-feedback-close{display:none;margin-top:20px;border:0;border-radius:999px;background:#ffdc00;color:#111;font-family:inherit;font-size:17px;font-weight:700;line-height:1.1;padding:13px 30px;min-width:170px;cursor:pointer}
 #utrWaitModal:has(.utr-wait-success) .utr-feedback-close{display:block}
 #utrWaitModal:has(.utr-wait-success) .utr-wait-title{margin-bottom:12px}
-#utrWaitModal:has(.utr-wait-success) .utr-wait-message{margin-bottom:0;color:#444}
+#utrWaitModal:has(.utr-wait-success) .utr-wait-message{margin-bottom:18px;color:#444}
 @keyframes utr-pop{from{transform:scale(.55);opacity:.3}to{transform:scale(1);opacity:1}}
 @keyframes utr-check{from{opacity:0;transform:rotate(-45deg) scale(.5)}to{opacity:1;transform:rotate(-45deg) scale(1)}}
-@media(max-width:480px){.utr-wait-success{width:58px;height:58px}.utr-feedback-close{margin-top:17px;font-size:16px;padding:12px 26px}}
+@media(max-width:480px){.utr-wait-success{flex-basis:50px;width:50px;height:50px}.utr-feedback-close{margin-top:16px;font-size:16px;padding:12px 26px}}
 
 
 /* Latest refinement: slightly slimmer cards and tighter vertical rhythm on phones.
@@ -840,7 +839,7 @@ async function copyText(s){try{await navigator.clipboard.writeText(s)}catch(e){c
 function copyAmount(){copyText(document.getElementById('amount').textContent.replace('₹ ','').replace(/,/g,''))}
 function copyVpa(){copyText(vpa)}
 function demoApp(name){alert(name+' button is for visual demo only. No payment is initiated.')}
-function submitUTR(){const value=document.getElementById('utr').value.trim(),f=document.getElementById('feedback');if(!/^\d{12}$/.test(value)){f.textContent='Enter a valid 12-digit UTR number.';f.style.color='#a00020';return}const modal=document.getElementById('utrWaitModal'),title=document.getElementById('utrWaitTitle'),message=document.getElementById('utrWaitMessage'),spinner=modal.querySelector('.utr-wait-spinner');title.textContent='Please Wait';message.textContent='Processing your UTR entry...';spinner.className='utr-wait-spinner';modal.classList.add('show');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';clearTimeout(window.__utrWaitTimer);window.__utrWaitTimer=setTimeout(()=>{title.textContent='UTR Entered Successfully';message.textContent='Please wait for confirmation.';spinner.className='utr-wait-success';spinner.setAttribute('aria-label','UTR entered');},1500)}
+function submitUTR(){const value=document.getElementById('utr').value.trim(),f=document.getElementById('feedback');if(!/^\d{12}$/.test(value)){f.textContent='Enter a valid 12-digit UTR number.';f.style.color='#a00020';return}const modal=document.getElementById('utrWaitModal'),title=document.getElementById('utrWaitTitle'),message=document.getElementById('utrWaitMessage'),spinner=modal.querySelector('.utr-wait-spinner');title.textContent='Please Wait';message.textContent='Processing your UTR entry...';spinner.className='utr-wait-spinner';modal.classList.add('show');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';clearTimeout(window.__utrWaitTimer);window.__utrWaitTimer=setTimeout(()=>{title.textContent='UTR Entered Successfully';message.textContent='Please wait for confirmation.';spinner.className='utr-wait-success';spinner.setAttribute('aria-label','UTR entered');},2000)}
 function closeUTRFeedback(){const modal=document.getElementById('utrWaitModal');modal.classList.remove('show');modal.setAttribute('aria-hidden','true');document.body.style.overflow=''}
 let seconds=598;setInterval(()=>{if(seconds>0)seconds--;document.getElementById('mins').textContent=String(Math.floor(seconds/60)).padStart(2,'0');document.getElementById('secs').textContent=String(seconds%60).padStart(2,'0')},1000);
 </script>
